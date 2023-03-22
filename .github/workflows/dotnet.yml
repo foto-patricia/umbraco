@@ -19,17 +19,20 @@ jobs:
       uses: onyxmueller/build-tag-number@v1
       with:
         token: ${{secrets.github_token}}      
+        
     - name: Print new build number
       run: echo "Build number is $BUILD_NUMBER"
       # Or, if you're on Windows: echo "Build number is ${env:BUILD_NUMBER}"    
+      
     - uses: actions/checkout@v3
+    
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
+        
     - name: Restore dependencies
       run: dotnet restore
+      
     - name: Build
       run: dotnet build --no-restore
-    - name: Publish
-      run: dotnet publish --os linux --arch x64 /t:PublishContainer -c Release -p:ContainerImageTag=v11.2.1.$BUILD_NUMBER

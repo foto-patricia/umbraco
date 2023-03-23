@@ -1,4 +1,7 @@
+
+
 using Microsoft.Extensions.Options;
+using Slimsy.DependencyInjection;
 
 namespace Umbraco.FotoPatricia
 {
@@ -31,12 +34,14 @@ namespace Umbraco.FotoPatricia
         /// </remarks>
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHealthChecks();
+            services.AddOptions();
+            services.Configure<CachingOptions>(_config.GetSection(nameof(CachingOptions)));
+
             services.AddTransient<IConfigureOptions<StaticFileOptions>, ConfigureStaticFileOptions>();
 
             services.AddResponseCompression(options => options.EnableForHttps = true);
             services.AddResponseCaching();
-
-            services.AddHealthChecks();
 
             services.AddOutputCache(options =>
             {
@@ -56,14 +61,13 @@ namespace Umbraco.FotoPatricia
                         .Cache()
                         .Expire(TimeSpan.FromHours(6));
                 });
-
-                
             });
 
             services.AddUmbraco(_env, _config)
                 .AddBackOffice()
                 .AddWebsite()
                 .AddComposers()
+                .AddSlimsy()
                 .Build();
         }
 
@@ -81,8 +85,16 @@ namespace Umbraco.FotoPatricia
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseResponseCaching();
-            app.UseOutputCache();
+            var cachingOptions = app.ApplicationServices.GetRequiredService<IOptions<CachingOptions>>();
+            if (cachingOptions.Value.UseResponseCaching)
+            {
+                app.UseResponseCaching();
+            }
+
+            if (cachingOptions.Value.UseOutputCaching)
+            {
+                app.UseOutputCache();
+            }
 
             app.UseHealthChecks("/healthz");
             
@@ -99,5 +111,11 @@ namespace Umbraco.FotoPatricia
                     u.UseWebsiteEndpoints();
                 });
         }
+    }
+
+    public class CachingOptions
+    {
+        public bool UseResponseCaching { get; set; }
+        public bool UseOutputCaching { get; set; }
     }
 }

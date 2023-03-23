@@ -7,8 +7,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Marten" Version="5.11.0" />
 		<PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.0" />
-		<PackageReference Include="Microsoft.NET.Build.Containers" Version="0.3.2" />
+		<PackageReference Include="Microsoft.NET.Build.Containers" Version="0.4.0" />
+		<PackageReference Include="Our.Umbraco.Slimsy" Version="4.0.2" />
 		<PackageReference Include="Umbraco.Cms" Version="11.2.1" />
 	</ItemGroup>
 
@@ -16,6 +18,10 @@
 		<!-- Opt-in to app-local ICU to ensure consistent globalization APIs across different platforms -->
 		<PackageReference Include="Microsoft.ICU.ICU4C.Runtime" Version="68.2.0.9" />
 		<RuntimeHostConfigurationOption Include="System.Globalization.AppLocalIcu" Value="68.2.0.9" Condition="$(RuntimeIdentifier.StartsWith('linux')) or $(RuntimeIdentifier.StartsWith('win')) or ('$(RuntimeIdentifier)' == '' and !$([MSBuild]::IsOSPlatform('osx')))" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Models\" />
 	</ItemGroup>
 
 	<PropertyGroup>

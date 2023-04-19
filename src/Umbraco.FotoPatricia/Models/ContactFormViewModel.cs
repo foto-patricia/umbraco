@@ -1,9 +1,20 @@
-﻿namespace Umbraco.FotoPatricia.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Umbraco.FotoPatricia.Models;
 
 public class ContactFormViewModel 
 {
-    public string Name { get; set; }
-    public string Email { get; set; }
-    public string PhoneNumber { get; set; }
-    public string Message { get; set; }
+    [Required]
+    public string Name { get; set; } = string.Empty;
+
+    [Required]
+    [EmailAddress]
+    public string Email { get; set; } = string.Empty;
+    
+    [Phone]
+    public virtual string PhoneNumber { get; set; } = string.Empty;
+
+    [Required]
+    [MinLength(10, ErrorMessage = "Mindestend 10 Zeichen sollte die Nachricht schon beinhalten!")]
+    public string Message { get; set; } = string.Empty;
 }

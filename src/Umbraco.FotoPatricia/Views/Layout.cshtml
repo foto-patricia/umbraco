@@ -1,0 +1,52 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+	Layout = null;
+}
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @await Html.PartialAsync("TailwindHead")
+    
+    <link rel="icon" href="@Umbraco.Media(Guid.Parse("32241272-4c11-4ce2-a1f8-072a649de181")).Url()" type="image/svg+xml">
+    
+    <!--<link rel="apple-touch-icon" href="/pwa-192x192.png">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#00aba9">
+    <meta name="msapplication-TileColor" content="#00aba9">
+    <meta name="theme-color" content="#00aba9">-->
+    
+    <title>@Model.Value("title", fallback: Fallback.ToAncestors)</title>
+    <meta name="description" content="@Model.Value("subtitle", fallback: Fallback.ToDefaultValue, defaultValue: new HtmlString("Foto Patricia - Foto Shooting für Schwangere, Neugeborene, CakeSmash und weiteres"))">
+    
+    <script defer data-domain="foto-patricia.ch" src="https://analytics.foto-patricia.ch/js/script.js"></script>
+    
+    @RenderSection("Head", false)
+</head>
+<body class="bg-white dark:bg-black dark:text-white">
+    <header>
+        @await Html.PartialAsync("Navigation")
+    </header>
+    
+    <main>
+        @RenderBody()
+    </main>
+    
+    <footer class="text-gray-800 w-full bg-gray-100">
+        @if(IsSectionDefined("footer"))
+        {
+            RenderSection("footer", false);
+        }
+        else
+        {
+            @await Html.PartialAsync("Footer");
+        }
+        </footer>
+    
+    <script src="/scripts/lazysizes.min.js" async></script>
+    <script src="/scripts/tailwind-elements.js"></script>
+    
+    @RenderSection("EndOfBody", false);
+</body>
+</html>

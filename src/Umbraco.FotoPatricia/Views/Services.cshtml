@@ -1,0 +1,142 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@using System.Linq;
+@using System.Collections.Generic;
+@using Umbraco.Cms.Core.Models;
+@using Umbraco.Cms.Core.Models.Blocks;
+@using Umbraco.Cms.Core.Models.PublishedContent;
+@using Umbraco.Extensions;
+@using Newtonsoft.Json;
+
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+	Layout = "Layout.cshtml";
+	var heroImage = Model.Value<MediaWithCrops>("heroImage");
+	var galleryImages = Model.Value<List<MediaWithCrops>>("gallery");
+    
+    var produkte = Model
+        .Value<IEnumerable<BlockListItem>>("produkte")
+        .Select(bli => (ContentModels.Produkt)bli.Content)
+        .ToList();
+}
+
+<!-- Hero section -->
+<div id="hero" class="relative">
+    <div class="hero-image-wrapper w-full h-64 lg:h-96 xl:h-128">
+        <div class="md:hidden hero-image bg-fixed bg-contain w-full h-64" 
+            style="background-image:url(@heroImage.GetCropUrl(cropAlias: "square", useCropDimensions: true, urlMode: UrlMode.Default, furtherOptions:"&format=WebP"))">
+        </div>
+        
+        <div class="hidden md:block hero-image bg-fixed bg-contain w-full h-64 lg:h-96 xl:h-128" 
+            style="background-image:url(@heroImage.GetCropUrl(cropAlias: "hero", useCropDimensions: true, urlMode: UrlMode.Default, furtherOptions:"&format=WebP"))">
+        </div>
+    </div>
+
+    <div class="absolute inset-0">
+        <div class="flex items-center justify-center h-full">
+            <div class="backdrop-filter backdrop-blur-md bg-opacity-25 bg-white rounded-full">
+                <h1 class="text-white opacity-80 drop-shadow-lg text-4xl md:text-6xl font-bold my-4 mx-8">@Model.Value("title")</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Richt text content body -->
+<div class="my-16 w-full mx-2 md:w-3/4 md:mx-auto">
+    @Model.Value("body")
+</div>
+
+<!-- Image Gallery -->
+<section id="imageGallery" class="overflow-hidden text-neutral-700 bg-gray-100">
+  <div class="container mx-auto px-5 py-4 lg:px-32 lg:py-16">
+    <div class="-m-1 flex flex-wrap md:-m-2">
+        
+    @for(var i = 0; i < galleryImages.Count; i += 6)
+    {
+        <div class="flex w-1/2 flex-wrap">
+            @for(var j=0; j < Math.Min(3, galleryImages.Count - i); j++)
+            {
+                // @item.GetCropUrl(cropAlias: "preview", useCropDimensions: true, urlMode: UrlMode.Default, furtherOptions:"&format=WebP")
+                var item = galleryImages[i+j];
+                @if(j < 2)
+                {
+                    <a class="w-1/2 p-1 md:p-2" data-fslightbox href="@item.Url()">
+                      <slimsy-picture
+                        width="500"
+                        height="500"
+                        media-item="@item" 
+                        css-class="block h-full w-full rounded-lg object-cover object-center"
+                        render-lqip="true" 
+                        render-webp-alternative="true">
+                      </slimsy-picture>
+                    </a>
+                }
+                else
+                {
+                    <a class="w-full p-1 md:p-2" data-fslightbox href="@item.Url()">
+                      <slimsy-picture
+                        width="500"
+                        height="500"
+                        media-item="@item" 
+                        css-class="block h-full w-full rounded-lg object-cover object-center"
+                        render-lqip="true" 
+                        render-webp-alternative="true">
+                      </slimsy-picture>
+                    </a>
+                }
+            }
+        </div>
+        @if(galleryImages.Count > i + 3)
+        {
+            <div class="flex w-1/2 flex-wrap">
+              
+            @for(var j=0; j < Math.Min(3, galleryImages.Count - i - 3); j++)
+            {
+                var item = galleryImages [i+j+3];
+                @if(j > 0)
+                {
+                <a class="w-1/2 p-1 md:p-2" data-fslightbox href="@item.Url()">
+                      <slimsy-picture
+                        width="500"
+                        height="500"
+                        media-item="@item" 
+                        css-class="block h-full w-full rounded-lg object-cover object-center"
+                        render-lqip="true" 
+                        render-webp-alternative="true">
+                      </slimsy-picture>
+                    </a>
+                }
+                else
+                {
+                <a class="w-full p-1 md:p-2" data-fslightbox href="@item.Url()">
+                    
+                      <slimsy-picture
+                        width="500"
+                        height="500"
+                        media-item="@item" 
+                        css-class="block h-full w-full rounded-lg object-cover object-center"
+                        render-lqip="true" 
+                        render-webp-alternative="true">
+                      </slimsy-picture>
+                    </a>
+                }
+            }
+            </div>
+        }
+    }
+    </div>
+  </div>
+</section>
+
+<!-- Produkte -->
+@Html.Partial("Produkte", produkte)
+
+<div class="mb-16 whitespace-normal w-full mx-8 md:w-3/4 md:mx-auto lg:w-1/2">
+@Model.Value("produktErlaeuterung")
+</div>
+
+@section EndOfBody
+{
+    <script src="https://unpkg.com/fslightbox@3.4.1/index.js"></script>
+}

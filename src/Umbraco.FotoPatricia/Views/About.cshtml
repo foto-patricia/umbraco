@@ -1,0 +1,40 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.About>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.FotoPatricia.Models;
+@using Umbraco.Cms.Core.Models;
+@using Umbraco.Cms.Core.Models.Blocks;
+@using Umbraco.Cms.Core.Models.PublishedContent;
+
+@{
+	Layout = "Layout.cshtml";
+	var heroImage = Model.Value<MediaWithCrops>("heroImage");
+}
+
+<!-- Hero section -->
+<div id="hero" class="relative">
+    <div class="hero-image-wrapper w-full h-64 lg:h-96 xl:h-128">
+        <div class="md:hidden hero-image bg-fixed bg-contain w-full h-64" 
+            style="background-image:url(@heroImage.GetCropUrl(cropAlias: "square", useCropDimensions: true, urlMode: UrlMode.Default, furtherOptions:"&format=WebP"))">
+        </div>
+        
+        <div class="hidden md:block hero-image bg-fixed bg-contain w-full h-64 lg:h-96 xl:h-128" 
+            style="background-image:url(@heroImage.GetCropUrl(cropAlias: "hero", useCropDimensions: true, urlMode: UrlMode.Default, furtherOptions:"&format=WebP"))">
+        </div>
+    </div>
+
+    <div class="absolute inset-0">
+        <div class="flex items-center justify-center h-full">
+            <div class="backdrop-filter backdrop-blur-md bg-opacity-25 bg-white rounded-full">
+                <h1 class="text-white opacity-80 drop-shadow-lg text-4xl md:text-6xl font-bold my-4 mx-8">@Model.Value("title")</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Content -->
+<div class="container w-3/4 mx-auto my-8">
+    @Model.Value("body")
+</div>
+
+@await Html.PartialAsync("ContactForm", new ContactFormViewModel())

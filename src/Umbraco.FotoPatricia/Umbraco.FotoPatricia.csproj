@@ -8,14 +8,14 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.1" />
-		<PackageReference Include="Microsoft.NET.Build.Containers" Version="7.0.304" />
 		<PackageReference Include="Our.Umbraco.Slimsy" Version="4.0.3" />
-		<PackageReference Include="Umbraco.Cms" Version="11.4.0" />
+		<PackageReference Include="Umbraco.Cms" Version="12.0.0-rc4" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<!-- Opt-in to app-local ICU to ensure consistent globalization APIs across different platforms -->
 		<PackageReference Include="Microsoft.ICU.ICU4C.Runtime" Version="68.2.0.9" />
+		<PackageReference Include="uSync" Version="11.2.1" />
 		<RuntimeHostConfigurationOption Include="System.Globalization.AppLocalIcu" Value="68.2.0.9" Condition="$(RuntimeIdentifier.StartsWith('linux')) or $(RuntimeIdentifier.StartsWith('win')) or ('$(RuntimeIdentifier)' == '' and !$([MSBuild]::IsOSPlatform('osx')))" />
 	</ItemGroup>
 

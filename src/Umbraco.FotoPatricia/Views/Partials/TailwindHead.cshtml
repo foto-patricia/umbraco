@@ -1,7 +1,7 @@
 ﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
 
 <link href="/css/tailwind-elements-styles1.css" rel="stylesheet" />
-<!--<link href="/css/tailwind-elements-styles2.css" rel="stylesheet" />-->
+<link href="/css/tailwind-elements-styles2.css" rel="stylesheet" />
   
 <style type="text/tailwindcss">
     h1 {
@@ -29,7 +29,7 @@
     }
     
     blockquote {
-        @@apply text-center my-8 text-lg font-light italic text-cyan-900 font-serif;
+        @@apply text-center my-8 text-lg font-light italic font-serif;
     }
     
     p {
@@ -47,6 +47,10 @@
     
     body {
         @@apply font-sans;
+    }
+    
+    a {
+        @@apply text-cyan-600;
     }
 </style>
 <script src="/scripts/tailwind.js"></script>

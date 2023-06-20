@@ -7,11 +7,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Marten" Version="5.11.0" />
 		<PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.1" />
-		<PackageReference Include="Microsoft.NET.Build.Containers" Version="0.4.0" />
+		<PackageReference Include="Microsoft.NET.Build.Containers" Version="7.0.304" />
 		<PackageReference Include="Our.Umbraco.Slimsy" Version="4.0.3" />
-		<PackageReference Include="Umbraco.Cms" Version="11.3.0" />
+		<PackageReference Include="Umbraco.Cms" Version="11.4.0" />
 	</ItemGroup>
 
 	<ItemGroup>

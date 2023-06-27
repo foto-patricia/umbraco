@@ -477,3 +477,4 @@ $RECYCLE.BIN/
 *.lnk
 /src/Umbraco.FotoPatricia/umbraco/Data
 /src/Umbraco.FotoPatricia/wwwroot/media
+/src/Umbraco.FotoPatricia/uSync

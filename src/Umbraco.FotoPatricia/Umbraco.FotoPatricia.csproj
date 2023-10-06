@@ -8,6 +8,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.1" />
+		<PackageReference Include="NetEscapades.AspNetCore.SecurityHeaders" Version="0.21.0" />
 		<PackageReference Include="Our.Umbraco.Slimsy" Version="4.1.0" />
 		<PackageReference Include="SeoToolkit.Umbraco" Version="3.3.0" />
 		<PackageReference Include="Umbraco.Cms" Version="12.2.0" />

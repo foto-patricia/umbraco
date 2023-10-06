@@ -78,6 +78,7 @@ namespace Umbraco.FotoPatricia
         /// <param name="env">The web hosting environment.</param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSecurityHeaders();
             app.UseResponseCompression();
 
             if (env.IsDevelopment())

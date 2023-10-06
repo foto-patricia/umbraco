@@ -78,12 +78,20 @@ namespace Umbraco.FotoPatricia
         /// <param name="env">The web hosting environment.</param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseSecurityHeaders();
+            var policyCollection = new HeaderPolicyCollection()
+                .AddDefaultSecurityHeaders()
+                .AddPermissionsPolicy(_ => { });
+            app.UseSecurityHeaders(policyCollection);
+
             app.UseResponseCompression();
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseHsts();
             }
 
             var cachingOptions = app.ApplicationServices.GetRequiredService<IOptions<CachingOptions>>();
